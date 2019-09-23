@@ -37,7 +37,7 @@ public:
 	cv::VideoCapture _capture;
 	const string caffe_config_file = "./deploy.prototxt";
 	const string caffe_weight_file = "./res10_300x300_ssd_iter_140000_fp16.caffemodel";
-	const string landmarks_model = "shape_predictor_68_face_landmarks.dat";
+	const string landmarks_model = "./shape_predictor_68_face_landmarks.dat";
 
 	// Face box data
 	int face_width;
