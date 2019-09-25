@@ -1,6 +1,6 @@
 # Realtime-Head-Pose-Open-CV
 
-This project is a C++ ( DLL) implimentation of realtime headpose tracking using OpenCV and DLIB.
+This project is a C++ implimentation of realtime headpose tracking using OpenCV and DLIB.
 
 ## Interesting Stuff
 
