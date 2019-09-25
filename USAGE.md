@@ -26,7 +26,5 @@ git clone https://github.com/NeuralVFX/realtime-head-pose-open-cv.git
 - `head-pose-opencv.dll` will be created in the `\x64\Release` directory
 
 ## Use
-- `head-pose-opencv.dll` and OpenCV and Dlib `.dll` files must be added to Unity Plugins directory
-- SSD and Landmark Detection models must be downloaded and placed into the Unity project directory
 - Detailed instuction for using with Unity, and an example project using `head-pose-opencv.dll` can be found here:  https://github.com/NeuralVFX/unity-head-pose-example
 
