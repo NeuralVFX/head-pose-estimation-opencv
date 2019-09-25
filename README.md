@@ -7,7 +7,7 @@ This project is a C++ implimentation of realtime headpose tracking using OpenCV 
 
 - The output of the Visual Studio Project is a `DLL`, which can be added to a Unity Project and accessed through C#
 - The DLL outputs both the transform matrix of the head, and the pixels of the image
-- Runs on a live video stream at 30 FPS
+- Runs on a live video stream
 
 ## Estimation Pipeline Example
 ![](examples/pose_pipeline_example.png)
