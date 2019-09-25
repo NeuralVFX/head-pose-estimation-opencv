@@ -13,12 +13,13 @@ git clone https://github.com/NeuralVFX/realtime-head-pose-open-cv.git
 ## Setting Up Visual Studio
 
 #### VC++ Directories
-- Replace the `Dlib` and `OpenCV` paths under `Library Directories` and `Include Directories`
+- Replace the `Dlib` paths under `Library Directories` and `Include Directories`
 #### C/C++ 
 - Replace the `Dlib` and `OpenCV` paths under `Additional Include Directories`
 #### Linker
 - Replace `OpenCV` path under `General / Additional Libraries Directories`
 - Replace `Dlib` and `OpenCV` `.lib` files and under `Input / Additional Dependencies`
+- If using `OpenVino` version of `OpenCV`, you can remove my `OpenCV` `.lib` files and only use `opencv_world401.lib` under `Input / Additional Dependencies`
 
 ## Compile
 - Compile in release mode
