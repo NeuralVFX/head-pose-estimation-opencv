@@ -1,7 +1,9 @@
 
 ## Getting Started
+- Install Visual Studio 2017
 - Download and compile `OpenCV 4.1.1` from https://opencv.org/
 - Download and compile `Dlib 19.17` from http://dlib.net/
+
 - Clone this repo:
 
 ```bash
