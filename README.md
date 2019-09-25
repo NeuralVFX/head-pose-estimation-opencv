@@ -1,4 +1,4 @@
-![](examples/unity_example.png)
+![](examples/unity_example.gif)
 # Realtime-Head-Pose-Open-CV
 
 This project is a C++ implimentation of realtime headpose tracking using OpenCV and DLIB.
