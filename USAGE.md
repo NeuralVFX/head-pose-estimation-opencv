@@ -10,17 +10,17 @@ git clone https://github.com/NeuralVFX/realtime-head-pose-open-cv.git
 
 ## Setting Up Visual Studio
 
-### VC++ Directories
+#### VC++ Directories
 - Replace the `Dlib` and `OpenCV` paths under `Library Directories` and `Include Directories`
-### C/C++ 
+#### C/C++ 
 - Replace the `Dlib` and `OpenCV` paths under `Additional Include Directories`
-### Linker
+#### Linker
 - Replace `OpenCV` path under `General / Additional Libraries Directories`
 - Replace `Dlib` and `OpenCV` `.lib` files and under `Input / Additional Dependencies`
 
 ## Compile
 - Compile in release mode
-- `head-pose-opencv.dll` will be created in the x64 output directory
+- `head-pose-opencv.dll` will be created in the `\x64\Release` directory
 
 ## Use
 - `head-pose-opencv.dll` must be added to a Unity project, and declared with `System.Runtime.InteropServices`
