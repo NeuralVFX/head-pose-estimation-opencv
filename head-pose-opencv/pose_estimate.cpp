@@ -41,11 +41,13 @@ Estimator::Estimator()
 	// Set resolution
 	frame_width = 1920;
 	frame_height = 1080;
+	scale_ratio = 1;
 	run_count = 0;
 }
 
-int Estimator::init(int& outCameraWidth, int& outCameraHeight)
+int Estimator::init(int& outCameraWidth, int& outCameraHeight, int detectRatio)
 {
+	scale_ratio = detectRatio;
 	// Open the stream.
 	_capture.open(1);
 	if (!_capture.isOpened())
@@ -86,10 +88,10 @@ void Estimator::detect(TransformData& outFaces)
 		if (confidence > .5)
 		{
 			// Get dimensions
-			int x1 = static_cast<int>(detectionMat.at<float>(i, 3) * frame_width);
-			int y1 = static_cast<int>(detectionMat.at<float>(i, 4) * frame_height);
-			int x2 = static_cast<int>(detectionMat.at<float>(i, 5) * frame_width);
-			int y2 = static_cast<int>(detectionMat.at<float>(i, 6) * frame_height);
+			int x1 = static_cast<int>(detectionMat.at<float>(i, 3) * (frame_width / scale_ratio));
+			int y1 = static_cast<int>(detectionMat.at<float>(i, 4) * (frame_height / scale_ratio));
+			int x2 = static_cast<int>(detectionMat.at<float>(i, 5) * (frame_width / scale_ratio));
+			int y2 = static_cast<int>(detectionMat.at<float>(i, 6) * (frame_height / scale_ratio));
 
 			// Generate square dimensions
 			face_width = max(x2 - x1, y2 - y1) / 2.8;
@@ -104,9 +106,9 @@ void Estimator::detect(TransformData& outFaces)
 			}
 
 			// Apply square dimensions
-			dlib::point DpointA(center_x - face_width, center_y - face_width);
-			dlib::point DpointB(center_x + face_width, center_y + face_width);
-			dlib::rectangle new_face(DpointA, DpointB);
+			dlib::point point_a(center_x - face_width, center_y - face_width);
+			dlib::point point_b(center_x + face_width, center_y + face_width);
+			dlib::rectangle new_face(point_a, point_b);
 
 			if (confidence > largest_conf)
 			{
@@ -118,7 +120,9 @@ void Estimator::detect(TransformData& outFaces)
 	}
 
 	// Run landmark detection
-	dlib::cv_image<dlib::bgr_pixel> dlib_image(frame);
+	cv::Mat half_frame(frame_height / scale_ratio, frame_width / scale_ratio, frame.type());
+	cv::resize(frame, half_frame, half_frame.size(), cv::INTER_CUBIC);
+	dlib::cv_image<dlib::bgr_pixel> dlib_image(half_frame);
 	dlib::full_object_detection face_landmark;
 	face_landmark = landmark_detector(dlib_image, face_rect);
 
@@ -127,12 +131,12 @@ void Estimator::detect(TransformData& outFaces)
 
 	// Prepair face points for perspective solve
 	vector<cv::Point2d> image_points;
-	image_points.push_back(cv::Point2d(face_landmark.part(30).x(), face_landmark.part(30).y()));    // Nose tip
-	image_points.push_back(cv::Point2d(face_landmark.part(8).x(), face_landmark.part(8).y()));      // Chin
-	image_points.push_back(cv::Point2d(face_landmark.part(36).x(), face_landmark.part(36).y()));    // Left eye left corner
-	image_points.push_back(cv::Point2d(face_landmark.part(45).x(), face_landmark.part(45).y()));    // Right eye right corner
-	image_points.push_back(cv::Point2d(face_landmark.part(48).x(), face_landmark.part(48).y()));    // Left Mouth corner
-	image_points.push_back(cv::Point2d(face_landmark.part(54).x(), face_landmark.part(54).y()));    // Right mouth corner
+	image_points.push_back(cv::Point2d(face_landmark.part(30).x() * scale_ratio, face_landmark.part(30).y() * scale_ratio));    // Nose tip
+	image_points.push_back(cv::Point2d(face_landmark.part(8).x() * scale_ratio, face_landmark.part(8).y() * scale_ratio));      // Chin
+	image_points.push_back(cv::Point2d(face_landmark.part(36).x() * scale_ratio, face_landmark.part(36).y() * scale_ratio));    // Left eye left corner
+	image_points.push_back(cv::Point2d(face_landmark.part(45).x() * scale_ratio, face_landmark.part(45).y() * scale_ratio));    // Right eye right corner
+	image_points.push_back(cv::Point2d(face_landmark.part(48).x() * scale_ratio, face_landmark.part(48).y() * scale_ratio));    // Left Mouth corner
+	image_points.push_back(cv::Point2d(face_landmark.part(54).x() * scale_ratio, face_landmark.part(54).y() * scale_ratio));    // Right mouth corner
 
 	// Generate fake camera Matrix
 	double focal_length = frame.cols;
@@ -165,12 +169,12 @@ void Estimator::getRawImageBytes(unsigned char* data, int width, int height)
 	if (frame.empty())
 		return;
 
-	cv::Mat resizedMat(height, width, frame.type());
-	cv::resize(frame, resizedMat, resizedMat.size(), cv::INTER_CUBIC);
+	cv::Mat tex_mat(height, width, frame.type());
+	cv::resize(frame, tex_mat, tex_mat.size(), cv::INTER_CUBIC);
 
 	//Convert from RGB to ARGB 
 	cv::Mat argb_img;
-	cv::cvtColor(resizedMat, argb_img, cv::COLOR_RGB2BGRA);
+	cv::cvtColor(tex_mat, argb_img, cv::COLOR_RGB2BGRA);
 	vector<cv::Mat> bgra;
 	cv::split(argb_img, bgra);
 	cv::swap(bgra[0], bgra[3]);
