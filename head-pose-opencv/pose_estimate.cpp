@@ -45,11 +45,11 @@ Estimator::Estimator()
 	run_count = 0;
 }
 
-int Estimator::init(int& outCameraWidth, int& outCameraHeight, int detectRatio)
+int Estimator::init(int& outCameraWidth, int& outCameraHeight, int detectRatio, int camId)
 {
 	scale_ratio = detectRatio;
 	// Open the stream.
-	_capture.open(1);
+	_capture.open(camId);
 	if (!_capture.isOpened())
 		return -2;
 
