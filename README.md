@@ -3,7 +3,7 @@
 
 This project is a C++ implimentation of realtime headpose tracking using OpenCV and DLIB.
 
-## Interesting Stuff
+## Notes
 
 - The output of the Visual Studio Project is a `DLL`, which can be added to a Unity Project and accessed through C#
 - The DLL outputs both the transform matrix of the head, and the pixels of the image
