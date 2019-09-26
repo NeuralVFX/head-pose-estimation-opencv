@@ -68,7 +68,7 @@ public:
 
 	Estimator();
 
-	int init(int& outCameraWidth, int& outCameraHeight, int detectRatio);
+	int init(int& outCameraWidth, int& outCameraHeight, int detectRatio, int camId);
 
 	void close();
 
