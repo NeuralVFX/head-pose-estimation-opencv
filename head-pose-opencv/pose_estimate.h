@@ -51,6 +51,8 @@ public:
 	int frame_width;
 	int frame_height;
 
+	int scale_ratio;
+
 	// Networks
 	cv::dnn::Net box_detector;
 	dlib::shape_predictor landmark_detector;
@@ -66,7 +68,7 @@ public:
 
 	Estimator();
 
-	int init(int& outCameraWidth, int& outCameraHeight);
+	int init(int& outCameraWidth, int& outCameraHeight, int detectRatio);
 
 	void close();
 
