@@ -1,7 +1,7 @@
 ![](examples/unity_example.gif)
 # Head-Pose-Estimation-OpenCV
 
-This project is a C++ implimentation of realtime headpose tracking using OpenCV and DLIB. An example of integrating this in Unity can be found in [Unity-Head-Pose-Example](https://github.com/NeuralVFX/unity-head-pose-example).
+This project is a C++ implimentation of realtime headpose tracking using OpenCV and DLIB. An example of integrating this in Unity can be found in [Head-Pose-Estimation-Unity](https://github.com/NeuralVFX/head-pose-estimation-unity).
 
 ## Notes
 
